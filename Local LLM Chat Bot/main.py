@@ -123,6 +123,7 @@ import fitz  # PyMuPDF
 import pandas as pd
 from pptx import Presentation
 import json
+from docx import Document
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 
@@ -172,6 +173,13 @@ def read_json(file_path):
         data = json.load(file)
     return json.dumps(data, indent=4)
 
+def read_docx(file_path):
+    doc = Document(file_path)
+    text = ""
+    for para in doc.paragraphs:
+        text += para.text + "\n"
+    return text
+
 def read_folder(folder_path):
     context = ""
     for filename in os.listdir(folder_path):
@@ -186,10 +194,12 @@ def read_folder(folder_path):
             context += read_ppt(file_path)
         elif filename.endswith(".json"):
             context += read_json(file_path)
+        elif filename.endswith(".docx"):
+            context += read_docx(file_path)
     return context
 
 def handle_conversation():
-    print("Welcome to the SandBot chatbot! Type 'exit' to quit.")
+    print("Welcome im your Local LLM Chat Bot, SandBot! Type 'exit' to quit.")
     while True:
         user_input = input("You: ")
         if user_input.lower() == "exit":
@@ -200,3 +210,4 @@ def handle_conversation():
 
 if __name__ == "__main__":
     handle_conversation()
+
