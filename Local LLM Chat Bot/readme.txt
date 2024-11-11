@@ -17,7 +17,7 @@ to activate the environment type the following
 source chatbot/bin/activate
 
 install the packages:
-pip install langchain langchain-ollama ollama pymupdf pandas python-pptx python-docx
+pip install langchain langchain-ollama ollama pymupdf pandas python-pptx python-docx pytesseract pillow
 
 to run the build type
 python3 main.py
