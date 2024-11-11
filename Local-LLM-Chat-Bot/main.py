@@ -124,8 +124,6 @@ import pandas as pd
 from pptx import Presentation
 import json
 from docx import Document
-from PIL import Image
-import pytesseract
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 
@@ -144,7 +142,7 @@ prompt = ChatPromptTemplate.from_template(template)
 chain = prompt | model
 
 # Predefined folder path
-PREDEFINED_FOLDER_PATH = "'/Users/sandrowtownsend/Documents/coding/Local LLM Chat Bot/data_base'"
+PREDEFINED_FOLDER_PATH = "/Users/sandrowtownsend/Documents/coding/Local-LLM-Chat-Bot/data_base"
 
 def read_pdf(file_path):
     doc = fitz.open(file_path)
@@ -182,11 +180,6 @@ def read_docx(file_path):
         text += para.text + "\n"
     return text
 
-def read_image(file_path):
-    image = Image.open(file_path)
-    text = pytesseract.image_to_string(image)
-    return text
-
 def read_folder(folder_path):
     context = ""
     for filename in os.listdir(folder_path):
@@ -203,12 +196,10 @@ def read_folder(folder_path):
             context += read_json(file_path)
         elif filename.endswith(".docx"):
             context += read_docx(file_path)
-        elif filename.endswith(".jpg") or filename.endswith(".png"):
-            context += read_image(file_path)
     return context
 
 def handle_conversation():
-    print("Welcome to the AI SandBot LLM Chatbot! Type 'exit' to quit.")
+    print("Welcome im your Local LLM Chat Bot, SandBot! Type 'exit' to quit.")
     while True:
         user_input = input("You: ")
         if user_input.lower() == "exit":
@@ -219,3 +210,4 @@ def handle_conversation():
 
 if __name__ == "__main__":
     handle_conversation()
+
